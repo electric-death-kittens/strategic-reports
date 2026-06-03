@@ -40,13 +40,13 @@ def produce_strategic_markdown_report(
     directory_output_root,
     report_header_level = '#',
 ):
-    report = report_header_level + ' Emily\'s Badass Strategic Review\n'
+    report = report_header_level + ' Emily\'s Strategic Review\n'
     report += '\n'
     report += '**How to use this report:**  This (mostly) daily report recommends business, entrepreneurship, and career strategies with respect to several critical operational arenas. It does not cover warfighting strategy despite the inclusion of defense industry recommendations.\n'
     report += '\n'
     report += '**Updated:** ' + str(datetime.datetime.now()).split('.')[0] + '\n'
     report += '\n'
-    report += '*AI-augmented analysis... because it scales. Caveat emptor.*\n'
+    report += '*LLM-generated analysis... because it scales. Occasionally human-reviewed.* ***Caveat emptor!***\n'
     report += '\n'
 
     report += report_header_level + '# Topics\n'
