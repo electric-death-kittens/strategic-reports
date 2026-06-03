@@ -39,12 +39,16 @@ def estimate_the_title_from_first_header(html_content):
 #
 # Figure out what to do about the title
 #
-def construct_title(html_content : str) -> str:
+def construct_title(
+    html_content : str,
+    title : str = None,
+) -> str:
     html_title = ''
-    title = get_title_if_it_exists(html_content)
-
+    
     if title == None:
-        title = estimate_the_title_from_first_header(html_content)
+        title = get_title_if_it_exists(html_content)
+        if title == None:
+            title = estimate_the_title_from_first_header(html_content)
 
     if title != None:
         html_title = '<title>' + title + '</title>'
@@ -77,13 +81,14 @@ def construct_head(
     html_content : str,
     ai_content : str = 'none',
     include_ai_content_attribute : bool = True,
+    title : str = None,
 ) -> str:
 
     html_head = '<head>\n'
 
-    html_title = construct_title(html_content)
+    html_title = construct_title(html_content, title = title)
     if html_title.strip() != '':
-        html_head += '\t' + construct_title(html_content) + '\n'
+        html_head += '\t' + html_title + '\n'
 
     if include_ai_content_attribute:
         html_head += '\t' + '<meta name="ai-content" content="' + ai_content + '">' + '\n'
@@ -94,13 +99,17 @@ def construct_head(
 #
 # Put everything together
 #
-def html_fix_assemble(html_content: str, ai_content : str = 'none') -> str:
+def html_fix_assemble(
+    html_content: str,
+    ai_content : str = 'none',
+    title : str = None,
+) -> str:
 
     html_content = wrap_tag_body(html_content)
     
     html_head = None
     if html_content.find('<head>') == -1:
-        html_head = construct_head(html_content, ai_content = ai_content)        
+        html_head = construct_head(html_content, ai_content = ai_content, title = title)
     html_content = html_head + '\n' + html_content
 
     html_content = insert_doctype(html_content)
